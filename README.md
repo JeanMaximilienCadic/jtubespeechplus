@@ -1,4 +1,6 @@
-# JTubeSpeech: Corpus of Japanese speech collected from YouTube 
+# JTubeSpeech+: Corpus of Japanese speech collected from YouTube
+This is a fork from https://github.com/sarulab-speech/jtubespeech
+
 This repository provides 1) a list of YouTube videos with Japanese subtitles (JTubeSpeech), 2) scripts for making new lists of new languages, and 3) tiny lists for other languages.
 
 ## Description
