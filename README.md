@@ -67,30 +67,30 @@ This repository provides 1) a list of YouTube videos with Japanese subtitles (JT
 `scripts/*.py` are scripts for data collection from YouTube. Since processes of the scripts are language independent, users can collect data of their favorite languages. [youtube-dl](https://github.com/ytdl-org/youtube-dl) and ffmpeg are required.
 
 ### step1: making search words 
-The script `scripts/make_search_word.py` downloads the wikipedia dump file and finds words for searching videos. `{lang}` is the language code, e.g., `ja` (Japanese) and `en` (English).
+The module `jtubespeechp/search` downloads the wikipedia dump file and finds words for searching videos. `{lang}` is the language code, e.g., `ja` (Japanese) and `en` (English).
 ```
-$ python scripts/make_search_word.py {lang}
+$ python -m jtubespeechp.search {lang}
 ```
 ### step2: obtaining video IDs
-The script `scripts/obtain_video_id.py` obtains YouTube video IDs by searching by words. `{filename_word_list}` is a word list file made in step1. After this step, the process will take a long time. It is recommended to split the files (e.g., `{filename_word_list}`) and run them in parallel.
+The module `jtubespeechp/video_id` obtains YouTube video IDs by searching by words. `{filename_word_list}` is a word list file made in step1. After this step, the process will take a long time. It is recommended to split the files (e.g., `{filename_word_list}`) and run them in parallel.
 ```
-$ python scripts/obtain_video_id.py {lang} {filename_word_list}
+$ python -m jtubespeechp.video_id {lang} {filename_word_list}
 ```
 ### step3: checking if subtitles are available
-The script `scripts/retrieve_subtitle_exists.py` retrieves whether the video has subtitles or not. `{filename_videoid_list}` is a videoID list file made in step2. This process will make a CSV file. 
+The module `jtubespeechp/subtitles` retrieves whether the video has subtitles or not. `{filename_videoid_list}` is a videoID list file made in step2. This process will make a CSV file. 
 ```
-$ python scripts/retrieve_subtitle_exists.py {lang} {filename_videoid_list}
+$ python -m jtubespeechp.subtitles  {lang} {filename_videoid_list}
 ```
 ### step4: downloading videos with manual subtitles
-The script `scripts/download_video.py` downloads audio and manual subtitles. Note that, this process requires a very large amount of storage.`{filename_subtitle_list}` is a subtitle list file made in step3. The audio and subtitles will be saved in `video/{lang}/wav16k` and `video/{lang}/txt`, respectively.
+The module `jtubespeechp/download` downloads audio and manual subtitles. Note that, this process requires a very large amount of storage.`{filename_subtitle_list}` is a subtitle list file made in step3. The audio and subtitles will be saved in `video/{lang}/wav16k` and `video/{lang}/txt`, respectively.
 ```
-$ python scripts/download_video.py {lang} {filename_subtitle_list}
+$ python -m jtubespeechp.download  {lang} {filename_subtitle_list}
 ```
 ### step5 (ASR): alignment and scoring
 Subtitles are not always correctly aligned with the audio and in some cases, subtitles not fit to the audio.
-The script `scripts/align.py` aligns subtitles and audio with CTC segmentation using an ESPnet 2 ASR model:
+The script `jtubespeechp/align` aligns subtitles and audio with CTC segmentation using an ESPnet 2 ASR model:
 ```
-$ python scripts/align.py {asr_train_config} {asr_model_file} {wavdir} {txtdir} {output_dir}
+$ python -m jtubespeechp.align {asr_train_config} {asr_model_file} {wavdir} {txtdir} {output_dir}
 ```
 The result is written into a segments file `segments.txt` and a log file `segments.log` in the output directory.
 Using the segments file, bad utterances or audio files can be sorted-out:
@@ -98,14 +98,7 @@ Using the segments file, bad utterances or audio files can be sorted-out:
 min_confidence_score=-0.3
 awk -v ms=${min_confidence_score} '{ if ($5 > ms) {print} }' ${output_dir}/segments.txt
 ```
-### step5 (ASV): speaker variation scoring
-There are three types of videos: text-to-speech (a.k.a., TTS) video, single-speaker (i.e., monologue) video, and multi-speaker (e.g., dialogue) video. The script `scripts/xxx.py` obtains scores of speaker variation within a video to classify videos into three types. 
-```
-$ python scripts/xxx.py
-```
 
-## Reference
-- coming soon
 
 ## Link
 - [youtube-dl](https://github.com/ytdl-org/youtube-dl)
