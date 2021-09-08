@@ -63,8 +63,13 @@ This repository provides 1) a list of YouTube videos with Japanese subtitles (JT
 - [Sayaka Shiota](http://www-isys.sd.tmu.ac.jp/) (Tokyo Metropolitan University, Japan)
 - [Shinji Watanabe](https://sites.google.com/view/shinjiwatanabe) (Carnegie Mellon University, USA)
 
+### Docker
+```shell
+docker pull cadic/jtubespeechp
+docker run --rm --name -v /FileStore:/Filestore -it jtubespeechp
+```
 ## Scripts for data collection
-`scripts/*.py` are scripts for data collection from YouTube. Since processes of the scripts are language independent, users can collect data of their favorite languages. [youtube-dl](https://github.com/ytdl-org/youtube-dl) and ffmpeg are required.
+`jtubespeechp` is a package for data collection from YouTube. Since processes of the scripts are language independent, users can collect data of their favorite languages. [youtube-dl](https://github.com/ytdl-org/youtube-dl) and ffmpeg are required.
 
 ### step1: making search words 
 The module `jtubespeechp/search` downloads the wikipedia dump file and finds words for searching videos. `{lang}` is the language code, e.g., `ja` (Japanese) and `en` (English).
