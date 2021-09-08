@@ -1,0 +1,9 @@
+#scripts/*
+word/*
+sub/*
+videoid/*
+video/*
+README.pdf
+__pycache__/
+*.ipynb
+multi-lang/*
