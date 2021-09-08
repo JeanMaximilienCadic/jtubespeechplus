@@ -1,3 +1,14 @@
 requests
 tqdm
 gnutools-python
+pydub
+pandas
+typeguard
+#espnet
+#espnet2
+soundfile
+#espnet_model_zoo
+torch
+num2words
+neologdn
+romkan
