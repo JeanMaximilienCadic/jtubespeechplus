@@ -5,7 +5,7 @@ import re
 import sys
 import subprocess
 from pathlib import Path
-from util import make_video_url, get_subtitle_language
+from jtubespeechp import make_video_url, get_subtitle_language
 import pandas as pd
 from tqdm import tqdm
 

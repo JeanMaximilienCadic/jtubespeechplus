@@ -4,7 +4,7 @@ import time
 from concurrent.futures import ProcessPoolExecutor, as_completed
 import requests
 from tqdm import tqdm
-from util import make_query_url
+from jtubespeechp import make_query_url
 from gnutools.fs import parent, name
 import os
 

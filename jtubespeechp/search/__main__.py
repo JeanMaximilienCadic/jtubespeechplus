@@ -2,7 +2,7 @@ import requests
 import bz2
 import argparse
 import sys
-from util import make_dump_url
+from jtubespeechp import make_dump_url
 from pathlib import Path
 
 def parse_args():

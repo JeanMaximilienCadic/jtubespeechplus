@@ -5,7 +5,7 @@ import subprocess
 import shutil
 import pydub
 from pathlib import Path
-from util import make_video_url, make_basename, vtt2txt
+from jtubespeechp import make_video_url, make_basename, vtt2txt
 import pandas as pd
 from tqdm import tqdm
 
