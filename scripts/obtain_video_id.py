@@ -1,26 +1,12 @@
 import argparse
 import re
-import sys
 import time
 from concurrent.futures import ProcessPoolExecutor, as_completed
-from pathlib import Path
-
 import requests
 from tqdm import tqdm
-
 from util import make_query_url
-
-
-def parse_args():
-    parser = argparse.ArgumentParser(
-        description="Obtaining video IDs from search words",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-    )
-    parser.add_argument("lang", type=str, help="language code (ja, en, ...)")
-    parser.add_argument("wordlist", type=str, help="filename of word list")
-    parser.add_argument("--outdir", type=str, default="videoid", help="dirname to save video IDs")
-    return parser.parse_args(sys.argv[1:])
-
+from gnutools.fs import parent, name
+import os
 
 def main(word, wait_sec, fn_videoid):
     try:
@@ -45,8 +31,8 @@ def main(word, wait_sec, fn_videoid):
 
 
 def obtain_video_id(lang, fn_word, outdir="videoid", wait_sec=0.2):
-    fn_videoid = Path(outdir) / lang / f"{Path(fn_word).stem}.txt"
-    fn_videoid.parent.mkdir(parents=True, exist_ok=True)
+    fn_videoid = f"{outdir}/{lang}/{name(fn_word)}.txt"
+    os.makedirs(parent(fn_videoid), exist_ok=True)
 
     with open(fn_videoid, "w") as f:
         f.write("")
@@ -61,6 +47,14 @@ def obtain_video_id(lang, fn_word, outdir="videoid", wait_sec=0.2):
 
 
 if __name__ == "__main__":
-    args = parse_args()
-    filename = obtain_video_id(args.lang, args.wordlist, args.outdir)
+    parser = argparse.ArgumentParser(
+        description="Obtaining video IDs from search words",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument("lang", type=str, help="language code (ja, en, ...)")
+    parser.add_argument("wordlist", type=str, help="filename of word list")
+    parser.add_argument("--outdir", type=str, default="videoid", help="dirname to save video IDs")
+    args = parser.parse_args()
+
+    filename = obtain_video_id(args.lang, args.wordlist, args.outdir, wait_sec=0.2)
     print(f"save {args.lang.upper()} video IDs to {filename}.")
