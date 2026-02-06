@@ -11,3 +11,5 @@ neologdn
 romkan
 espnet
 espnet_model_zoo
+protobuf>=5.29.6 # not directly required, pinned by Snyk to avoid a vulnerability
+zipp>=3.19.1 # not directly required, pinned by Snyk to avoid a vulnerability
